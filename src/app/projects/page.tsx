@@ -1,14 +1,10 @@
-import type { Metadata } from "next";
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import SiteHeader from "../site-header";
 import EnquiryModal from "../../components/enquiry-modal";
-
-export const metadata: Metadata = {
-  title: "Projects | WEEE Centre",
-  description: "Explore WEEE Centre projects advancing e-waste infrastructure, youth skills, green jobs, and circular systems across East Africa.",
-};
 
 const projects = [
   {

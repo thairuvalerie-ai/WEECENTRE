@@ -1,14 +1,10 @@
-import type { Metadata } from "next";
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import SiteHeader from "../site-header";
 import EnquiryModal from "../../components/enquiry-modal";
-
-export const metadata: Metadata = {
-  title: "Conferences & Summits | WEEE Centre",
-  description: "Join Africa's leading e-waste conference, bringing together sustainability leaders, ITAD professionals, and policymakers to advance the circular electronics economy.",
-};
 
 const pastConferences = [
   {

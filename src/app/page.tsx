@@ -1,4 +1,5 @@
-            <div className="footer-col"><h3>Quick links</h3><Link href="/about">About</Link><Link href="#impact">Sustainability</Link><Link href="#impact">Blog</Link><Link href="/projects">Projects</Link><Link href="#process">Events</Link><Link href="#partners">Conferences</Link><Link href="#contact">Contact</Link></div>
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";

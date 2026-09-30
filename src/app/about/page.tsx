@@ -1,14 +1,10 @@
-import type { Metadata } from "next";
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import SiteHeader from "../site-header";
 import EnquiryModal from "../../components/enquiry-modal";
-
-export const metadata: Metadata = {
-  title: "About Us | WEEE Centre",
-  description: "Learn about WEEE Centre's mission, vision, values, and work advancing responsible e-waste management in East Africa since 2012.",
-};
 
 const values = [
   ["01", "Sustainability", "Advancing environmentally responsible solutions."],

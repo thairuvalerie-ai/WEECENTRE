@@ -1,14 +1,10 @@
-import type { Metadata } from "next";
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import SiteHeader from "../site-header";
 import EnquiryModal from "../../components/enquiry-modal";
-
-export const metadata: Metadata = {
-  title: "Services | WEEE Centre",
-  description: "Certified e-waste collection, IT asset disposal, data destruction, recycling, refurbishment, and asset recovery services across East Africa.",
-};
 
 const services = [
   {

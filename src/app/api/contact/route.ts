@@ -47,7 +47,7 @@ Submitted at: ${new Date().toISOString()}
       to: process.env.TO_EMAIL || 'info@weeecentre.com',
       subject: `Contact Form: ${subject}`,
       text: emailBody,
-      reply_to: email,
+      replyTo: email,
     });
 
     if (error) {

@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description: "We collect, recycle, refurbish, and responsibly dispose of electronic waste for a safer, more sustainable future.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" data-scroll-behavior="smooth"><body>{children}</body></html>
   );

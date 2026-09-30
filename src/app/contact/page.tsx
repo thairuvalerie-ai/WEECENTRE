@@ -1,15 +1,11 @@
-import type { Metadata } from "next";
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import ContactForm from "./contact-form";
 import SiteHeader from "../site-header";
 import EnquiryModal from "../../components/enquiry-modal";
-
-export const metadata: Metadata = {
-  title: "Contact | WEEE Centre",
-  description: "Plan an e-waste pickup or contact WEEE Centre about collection, recycling, refurbishment, or asset recovery in Kenya.",
-};
 
 export default function ContactPage() {
   const [modalOpen, setModalOpen] = useState(false);
