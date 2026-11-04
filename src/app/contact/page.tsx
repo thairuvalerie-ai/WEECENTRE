@@ -46,6 +46,26 @@ export default function ContactPage() {
                 <div><dt>Hours</dt><dd>Mon–Fri · 8:00–18:00</dd></div>
               </dl>
               <a className="whatsapp-link" href="https://wa.me/254701819559" target="_blank" rel="noreferrer"><span className="whatsapp-symbol" aria-hidden="true">W</span><span>Chat on WhatsApp<small>Usually the quickest way to reach us</small></span><span className="whatsapp-arrow" aria-hidden="true">↗</span></a>
+              <div className="contact-map">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.8176!2d36.8948!3d-1.2921!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f10d3e5b2e0e7%3A0x6b5b0e3b3b3b3b3b!2sMihango%2C%20Embakasi%2C%20Nairobi%2C%20Kenya!5e0!3m2!1sen!2ske!4v1699123456789!5m2!1sen!2ske"
+                  width="100%"
+                  height="300"
+                  style={{ border: 0, borderRadius: '8px' }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="WEEE Centre Location - Mihango, Embakasi, Nairobi"
+                />
+                <a
+                  href="https://www.google.com/maps/dir/?api=1&destination=Mihango+Embakasi+Nairobi+Kenya"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="map-link"
+                >
+                  Get Directions <span aria-hidden="true">↗</span>
+                </a>
+              </div>
             </aside>
             <ContactForm />
           </div>

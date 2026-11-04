@@ -566,6 +566,10 @@ button { font: inherit; }
 .whatsapp-link > span:nth-child(2) { flex: 1; font-size: 12px; font-weight: 700; }
 .whatsapp-link small { display: block; margin-top: 3px; color: #728076; font-size: 10px; font-weight: 400; }
 .whatsapp-arrow { font-size: 17px; }
+.contact-map { margin-top: 24px; }
+.contact-map iframe { display: block; width: 100%; height: 300px; border: 1px solid var(--line); border-radius: 8px; }
+.map-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; color: var(--green); font-size: 12px; font-weight: 700; transition: color .2s; }
+.map-link:hover { color: var(--deep); }
 .contact-form { min-width: 0; padding: clamp(23px, 3vw, 36px); border: 1px solid var(--line); background: var(--white); }
 .contact-form-heading { padding-bottom: 20px; border-bottom: 1px solid var(--line); }
 .contact-form-heading > span { color: #839087; font-size: 10px; font-weight: 700; letter-spacing: .12em; }
