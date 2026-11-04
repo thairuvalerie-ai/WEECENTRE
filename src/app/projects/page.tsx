@@ -162,6 +162,7 @@ export default function ProjectsPage() {
           </div>
           <div className="services-credit"><span>Built &amp; developed by <a href="tel:+254752225283">Valerie Ngatha -0752225283</a></span></div>
           <div className="footer-bottom"><span>&copy; 2026 WEEE CENTRE. Managing e-Waste for a Safe Environment.</span><span className="certifications">ISO 14001:2015 &nbsp;·&nbsp; ISO 9001:2015</span></div>
+          <div className="footer-legal"><Link href="/terms">Terms and Conditions</Link><Link href="/privacy">Privacy Policy</Link></div>
         </div>
       </footer>
       <EnquiryModal isOpen={modalOpen} onClose={() => setModalOpen(false)} type={modalType} title={modalTitle} predefinedSubject={predefinedSubject} />

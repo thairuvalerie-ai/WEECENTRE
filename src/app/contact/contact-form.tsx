@@ -1,15 +1,47 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useState, useEffect, type FormEvent } from "react";
+import ReCaptcha from "@/components/recaptcha";
 
 export default function ContactForm() {
   const [status, setStatus] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [csrfToken, setCsrfToken] = useState<string | null>(null);
+  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
+
+  // Fetch CSRF token on component mount
+  useEffect(() => {
+    fetch('/api/csrf')
+      .then(res => res.json())
+      .then(data => {
+        if (data.csrfToken) {
+          setCsrfToken(data.csrfToken);
+        }
+      })
+      .catch(err => {
+        if (process.env.NODE_ENV === 'development') {
+          console.error('Failed to fetch CSRF token:', err);
+        }
+      });
+  }, []);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setIsSubmitting(true);
     setStatus("");
+
+    if (!csrfToken) {
+      setStatus("Security token not loaded. Please refresh the page and try again.");
+      setIsSubmitting(false);
+      return;
+    }
+
+    // Check reCAPTCHA if configured
+    if (process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY && !recaptchaToken) {
+      setStatus("Please complete the reCAPTCHA challenge.");
+      setIsSubmitting(false);
+      return;
+    }
 
     const formData = new FormData(event.currentTarget);
     const name = String(formData.get("name") ?? "").trim();
@@ -24,6 +56,7 @@ export default function ContactForm() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'x-csrf-token': csrfToken,
         },
         body: JSON.stringify({
           name,
@@ -32,6 +65,7 @@ export default function ContactForm() {
           organization,
           subject,
           message,
+          recaptchaToken,
         }),
       });
 
@@ -40,12 +74,15 @@ export default function ContactForm() {
       if (response.ok) {
         setStatus(data.message || "Thank you for your message. We will get back to you within one business day.");
         event.currentTarget.reset();
+        setRecaptchaToken(null); // Reset reCAPTCHA
       } else {
         setStatus(data.error || "An error occurred. Please try again.");
       }
     } catch (error) {
       setStatus("An error occurred. Please try again.");
-      console.error('Form submission error:', error);
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Form submission error:', error);
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -62,6 +99,11 @@ export default function ContactForm() {
         <label className="contact-field-wide">Subject<input name="subject" type="text" placeholder="How can we help?" required /></label>
         <label className="contact-field-wide">Message<textarea name="message" rows={5} placeholder="Tell us a little about what you need" required /></label>
       </div>
+      {process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY && (
+        <div className="contact-recaptcha">
+          <ReCaptcha onVerify={setRecaptchaToken} />
+        </div>
+      )}
       <div className="contact-form-bottom"><button className="button button-dark" type="submit" disabled={isSubmitting}>{isSubmitting ? "Sending..." : "Send message"} <span aria-hidden="true">&rarr;</span></button><p className="contact-form-status" role="status" aria-live="polite">{status}</p></div>
     </form>
   );

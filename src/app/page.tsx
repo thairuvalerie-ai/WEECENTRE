@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import SiteHeader from "./site-header";
 import EnquiryModal from "../components/enquiry-modal";
+import SocialIcon from "../components/social-icons";
 
 const services = [
   ["01", "E-Waste Collection", "On-demand and scheduled pickup for any volume.", "collection"],
@@ -183,8 +184,10 @@ export default function Home() {
             <div className="footer-col"><h3>Quick links</h3><Link href="/about">About</Link><a href="#impact">Sustainability</a><a href="#impact">Blog</a><Link href="/projects">Projects</Link><Link href="/events">Events</Link><Link href="/conferences">Conferences</Link><a href="#contact">Contact</a></div>
             <div className="footer-col"><h3>Services</h3><a href="#services">E-Waste Collection</a><a href="#services">Secure Data Destruction</a><a href="#services">IT Asset Disposal</a><a href="#services">Electronics Recycling</a><a href="#services">Refurbishment &amp; Reuse</a><a href="#services">Asset Recovery</a></div>
             <div className="footer-col"><h3>Contact</h3><a href="tel:+254701819559">+254 701 819 559</a><a href="mailto:info@weeecentre.com">info@weeecentre.com</a><address>Mihango, Embakasi<br />Off the Eastern By-pass<br />Kenya</address></div>
+            <div className="footer-col"><h3>Follow us</h3><div className="social-links"><SocialIcon name="facebook" href="https://facebook.com/weeecentre" ariaLabel="Follow us on Facebook" /><SocialIcon name="twitter" href="https://twitter.com/weeecentre" ariaLabel="Follow us on Twitter" /><SocialIcon name="linkedin" href="https://www.linkedin.com/company/weeecentre" ariaLabel="Follow us on LinkedIn" /><SocialIcon name="instagram" href="https://www.instagram.com/weeecentre" ariaLabel="Follow us on Instagram" /></div></div>
           </div>
           <div className="footer-bottom"><span>&copy; 2026 WEEE CENTRE. Managing e-Waste for a Safe Environment.</span><span className="certifications">ISO 14001:2015 &nbsp;·&nbsp; ISO 9001:2015</span></div>
+          <div className="footer-legal"><Link href="/terms">Terms and Conditions</Link><Link href="/privacy">Privacy Policy</Link></div>
         </div>
       </footer>
       <EnquiryModal isOpen={modalOpen} onClose={() => setModalOpen(false)} type={modalType} title={modalTitle} predefinedSubject={predefinedSubject} />

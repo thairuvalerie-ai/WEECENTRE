@@ -13,6 +13,7 @@ const links = [
   ["Events", "/events"],
   ["Conferences", "/conferences"],
   ["Contact", "/contact"],
+  ["Admin", "/admin"],
 ];
 
 export default function SiteHeader() {

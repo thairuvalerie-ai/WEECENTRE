@@ -1,0 +1,17 @@
+{
+  "name": "WEEE Centre - Responsible E-Waste Management",
+  "short_name": "WEEE Centre",
+  "description": "We collect, recycle, refurbish, and responsibly dispose of electronic waste for a safer, more sustainable future.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#10b981",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    }
+  ]
+}

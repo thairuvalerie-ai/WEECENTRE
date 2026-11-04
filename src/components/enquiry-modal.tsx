@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useState, useEffect, type FormEvent } from "react";
+import ReCaptcha from "@/components/recaptcha";
 
 interface EnquiryModalProps {
   isOpen: boolean;
@@ -19,6 +20,26 @@ export default function EnquiryModal({
 }: EnquiryModalProps) {
   const [status, setStatus] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [csrfToken, setCsrfToken] = useState<string | null>(null);
+  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
+
+  // Fetch CSRF token when modal opens
+  useEffect(() => {
+    if (isOpen) {
+      fetch('/api/csrf')
+        .then(res => res.json())
+        .then(data => {
+          if (data.csrfToken) {
+            setCsrfToken(data.csrfToken);
+          }
+        })
+        .catch(err => {
+          if (process.env.NODE_ENV === 'development') {
+            console.error('Failed to fetch CSRF token:', err);
+          }
+        });
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -29,6 +50,19 @@ export default function EnquiryModal({
     event.preventDefault();
     setIsSubmitting(true);
     setStatus("");
+
+    if (!csrfToken) {
+      setStatus("Security token not loaded. Please refresh the page and try again.");
+      setIsSubmitting(false);
+      return;
+    }
+
+    // Check reCAPTCHA if configured
+    if (process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY && !recaptchaToken) {
+      setStatus("Please complete the reCAPTCHA challenge.");
+      setIsSubmitting(false);
+      return;
+    }
 
     const formData = new FormData(event.currentTarget);
     const name = String(formData.get("name") ?? "").trim();
@@ -49,6 +83,7 @@ export default function EnquiryModal({
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'x-csrf-token': csrfToken,
         },
         body: JSON.stringify({
           type,
@@ -59,6 +94,7 @@ export default function EnquiryModal({
           subject,
           message,
           additionalData: Object.keys(additionalData).length > 0 ? additionalData : undefined,
+          recaptchaToken,
         }),
       });
 
@@ -67,6 +103,7 @@ export default function EnquiryModal({
       if (response.ok) {
         setStatus(data.message || "Thank you for your enquiry. We will get back to you within one business day.");
         event.currentTarget.reset();
+        setRecaptchaToken(null); // Reset reCAPTCHA
         setTimeout(() => {
           onClose();
           setStatus("");
@@ -76,7 +113,9 @@ export default function EnquiryModal({
       }
     } catch (error) {
       setStatus("An error occurred. Please try again.");
-      console.error('Form submission error:', error);
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Form submission error:', error);
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -110,6 +149,11 @@ export default function EnquiryModal({
             <label className="enquiry-field-wide">Subject<input name="subject" type="text" placeholder="How can we help?" defaultValue={defaultSubject} /></label>
             <label className="enquiry-field-wide">Message<textarea name="message" rows={4} placeholder="Tell us a little about what you need" required /></label>
           </div>
+          {process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY && (
+            <div className="enquiry-recaptcha">
+              <ReCaptcha onVerify={setRecaptchaToken} />
+            </div>
+          )}
           <div className="enquiry-form-bottom">
             <button className="button button-dark" type="submit" disabled={isSubmitting}>
               {isSubmitting ? "Sending..." : "Send enquiry"} <span aria-hidden="true">&rarr;</span>
