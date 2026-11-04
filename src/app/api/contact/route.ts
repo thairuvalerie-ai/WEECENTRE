@@ -44,6 +44,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const body = await request.json();
+    const { name, email, phone, organization, subject, message, recaptchaToken } = body;
+
     // reCAPTCHA verification (skip if not configured)
     if (process.env.RECAPTCHA_SECRET_KEY) {
       if (!recaptchaToken) {
@@ -61,9 +64,6 @@ export async function POST(request: NextRequest) {
         );
       }
     }
-
-    const body = await request.json();
-    const { name, email, phone, organization, subject, message, recaptchaToken } = body;
 
     // Basic validation
     if (!name || !email || !subject || !message) {
