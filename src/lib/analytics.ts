@@ -26,6 +26,7 @@ interface ContactSubmission {
   phone?: string;
   organization?: string;
   subject: string;
+  message: string;
 }
 
 // Page Views Functions

@@ -137,6 +137,7 @@ Submitted at: ${new Date().toISOString()}
       phone: sanitizedPhone,
       organization: sanitizedOrganization,
       subject: sanitizedSubject,
+      message: sanitizedMessage,
     });
 
     // Return success response

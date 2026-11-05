@@ -26,7 +26,10 @@ interface AnalyticsData {
       timestamp: number;
       name: string;
       email: string;
+      phone?: string;
+      organization?: string;
       subject: string;
+      message: string;
     }>;
   };
 }
@@ -299,15 +302,34 @@ export default function AdminPage() {
             {analyticsData && analyticsData.contactSubmissions.recentSubmissions.length > 0 ? (
               <div>
                 <h3 style={{ marginBottom: "15px", fontSize: "18px" }}>Recent Submissions</h3>
-                <div style={{ maxHeight: "400px", overflowY: "auto" }}>
+                <div style={{ maxHeight: "500px", overflowY: "auto" }}>
                   {analyticsData.contactSubmissions.recentSubmissions.map((submission) => (
-                    <div key={submission.id} style={{ padding: "15px", border: "1px solid #e5e7eb", borderRadius: "4px", marginBottom: "10px" }}>
+                    <div key={submission.id} style={{ padding: "15px", border: "1px solid #e5e7eb", borderRadius: "4px", marginBottom: "10px", backgroundColor: "#fff" }}>
                       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px" }}>
                         <strong>{submission.name}</strong>
                         <span style={{ fontSize: "12px", color: "#666" }}>{formatTimestamp(submission.timestamp)}</span>
                       </div>
-                      <p style={{ fontSize: "14px", color: "#666", marginBottom: "5px" }}>{submission.email}</p>
-                      <p style={{ fontSize: "14px" }}>{submission.subject}</p>
+                      <div style={{ marginBottom: "8px" }}>
+                        <p style={{ fontSize: "14px", color: "#666", margin: "2px 0" }}>
+                          <strong>Email:</strong> {submission.email}
+                        </p>
+                        {submission.phone && (
+                          <p style={{ fontSize: "14px", color: "#666", margin: "2px 0" }}>
+                            <strong>Phone:</strong> {submission.phone}
+                          </p>
+                        )}
+                        {submission.organization && (
+                          <p style={{ fontSize: "14px", color: "#666", margin: "2px 0" }}>
+                            <strong>Organization:</strong> {submission.organization}
+                          </p>
+                        )}
+                      </div>
+                      <div style={{ marginBottom: "8px" }}>
+                        <p style={{ fontSize: "14px", fontWeight: "600", margin: "2px 0" }}>Subject: {submission.subject}</p>
+                      </div>
+                      <div style={{ padding: "10px", backgroundColor: "#f9fafb", borderRadius: "4px", border: "1px solid #e5e7eb" }}>
+                        <p style={{ fontSize: "13px", color: "#374151", margin: 0, whiteSpace: "pre-wrap" }}>{submission.message}</p>
+                      </div>
                     </div>
                   ))}
                 </div>
